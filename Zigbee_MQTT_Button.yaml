@@ -37,13 +37,13 @@ action:
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ trigger.payload == 'Single' }}"
+            value_template: "{{ trigger.payload == 'single' }}"
         sequence: !input single_action
       - conditions:
           - condition: template
-            value_template: "{{ trigger.payload == 'Double' }}"
+            value_template: "{{ trigger.payload == 'double' }}"
         sequence: !input double_action
       - conditions:
           - condition: template
-            value_template: "{{ trigger.payload == 'Long' }}"
+            value_template: "{{ trigger.payload == 'long' }}"
         sequence: !input long_action
