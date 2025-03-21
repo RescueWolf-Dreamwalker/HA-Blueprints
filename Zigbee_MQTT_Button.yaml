@@ -1,0 +1,49 @@
+blueprint:
+  name: Zigbee MQTT Button
+  description: 'Setup actions for three functions of a Zigbee button with Press, Double Press, and Hold.'
+  domain: automation
+  input:
+    mqtt_topic:
+      name: MQTT Topic
+      description: 'The MQTT topic where the button sends its messages.'
+      selector:
+        text: {}
+    single_action:
+      name: Single Click Action
+      description: 'Action for a single click.'
+      selector:
+        action: {}
+      default: []
+    double_action:
+      name: Double Click Action
+      description: 'Action for a double click.'
+      selector:
+        action: {}
+      default: []
+    long_action:
+      name: Long Press Action
+      description: 'Action for a long press.'
+      selector:
+        action: {}
+      default: []
+
+mode: restart
+
+trigger:
+  - platform: mqtt
+    topic: !input mqtt_topic
+
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.payload == 'Single' }}"
+        sequence: !input single_action
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.payload == 'Double' }}"
+        sequence: !input double_action
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.payload == 'Long' }}"
+        sequence: !input long_action
